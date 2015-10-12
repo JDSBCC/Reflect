@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: 4c390b37b813e5a42907d1a28d516f00
+timeCreated: 1444212645
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Gallery_all__ws_NS2_Gallery_00
+    100004: GalleryVip_00__ws_NS_wind04
+    100006: GalleryVip_01__ws_NS_wind01
+    100008: GalleryWall_01__ws_NS_wind02
+    100010: GEntrance01__ws_NS_Door00
+    100012: GStep01__ws_NS_step00
+    100014: Lamp
+    100016: Out_Signborad__ws_NS_signboard02
+    100018: OutBoardA_1__ws_NS_signboard00Out
+    100020: OutBoardFream__ws_NS_iron00Out
+    100022: Roof__ws_NSTE_roof00
+    100024: RoofLight_01__ws_projecter_lightOut
+    100026: SeatA__ws_NS_seat00
+    100028: //RootNode
+    400000: Camera
+    400002: Gallery_all__ws_NS2_Gallery_00
+    400004: GalleryVip_00__ws_NS_wind04
+    400006: GalleryVip_01__ws_NS_wind01
+    400008: GalleryWall_01__ws_NS_wind02
+    400010: GEntrance01__ws_NS_Door00
+    400012: GStep01__ws_NS_step00
+    400014: Lamp
+    400016: Out_Signborad__ws_NS_signboard02
+    400018: OutBoardA_1__ws_NS_signboard00Out
+    400020: OutBoardFream__ws_NS_iron00Out
+    400022: Roof__ws_NSTE_roof00
+    400024: RoofLight_01__ws_projecter_lightOut
+    400026: SeatA__ws_NS_seat00
+    400028: //RootNode
+    2300000: Gallery_all__ws_NS2_Gallery_00
+    2300002: GalleryVip_00__ws_NS_wind04
+    2300004: GalleryVip_01__ws_NS_wind01
+    2300006: GalleryWall_01__ws_NS_wind02
+    2300008: GEntrance01__ws_NS_Door00
+    2300010: GStep01__ws_NS_step00
+    2300012: Out_Signborad__ws_NS_signboard02
+    2300014: OutBoardA_1__ws_NS_signboard00Out
+    2300016: OutBoardFream__ws_NS_iron00Out
+    2300018: Roof__ws_NSTE_roof00
+    2300020: RoofLight_01__ws_projecter_lightOut
+    2300022: SeatA__ws_NS_seat00
+    3300000: Gallery_all__ws_NS2_Gallery_00
+    3300002: GalleryVip_00__ws_NS_wind04
+    3300004: GalleryVip_01__ws_NS_wind01
+    3300006: GalleryWall_01__ws_NS_wind02
+    3300008: GEntrance01__ws_NS_Door00
+    3300010: GStep01__ws_NS_step00
+    3300012: Out_Signborad__ws_NS_signboard02
+    3300014: OutBoardA_1__ws_NS_signboard00Out
+    3300016: OutBoardFream__ws_NS_iron00Out
+    3300018: Roof__ws_NSTE_roof00
+    3300020: RoofLight_01__ws_projecter_lightOut
+    3300022: SeatA__ws_NS_seat00
+    4300000: OutBoardFream__ws_NS_iron00Out
+    4300002: Out_Signborad__ws_NS_signboard02
+    4300004: SeatA__ws_NS_seat00
+    4300006: Gallery_all__ws_NS2_Gallery_00
+    4300008: GalleryVip_00__ws_NS_wind04
+    4300010: OutBoardA_1__ws_NS_signboard00Out
+    4300012: GEntrance01__ws_NS_Door00
+    4300014: Roof__ws_NSTE_roof00
+    4300016: GalleryWall_01__ws_NS_wind02
+    4300018: RoofLight_01__ws_projecter_lightOut
+    4300020: GStep01__ws_NS_step00
+    4300022: GalleryVip_01__ws_NS_wind01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
