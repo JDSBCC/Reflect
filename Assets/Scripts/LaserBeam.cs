@@ -51,6 +51,13 @@ public class LaserBeam : MonoBehaviour
 
         if (Physics.Raycast(collisionPoint.point, finalPoint, out collisionPoint2, laserDistance)){
             Debug.Log("HALO");
+            if (collisionPoint2.transform.CompareTag("Minion"))
+            {
+                Minion minion = collisionPoint2.transform.gameObject.GetComponentInParent<Minion>();
+                if (minion.decreaseHealth()){
+                    minion.die();
+                }
+            }
         }else{
             Debug.Log("!!");
         }
