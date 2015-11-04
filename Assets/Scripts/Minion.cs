@@ -11,9 +11,8 @@ public class Minion : MonoBehaviour
 
     private GameObject _base;
     public float speed = 10;
-    public Animator anim;
-
-    // Use this for initialization
+    private Animator anim;
+    
     void Start()
     {
         //initiate curretn health
@@ -23,8 +22,7 @@ public class Minion : MonoBehaviour
         //initiate animations
         anim = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (current_health > 0)

@@ -57,6 +57,8 @@ public class LaserBeam : MonoBehaviour
                 if (minion.decreaseHealth()){
                     minion.die();
                 }
+                lineRenderer.SetPosition(2, collisionPoint2.point);
+                colliderLight.transform.position = collisionPoint2.point;
             }
         }else{
             Debug.Log("!!");
