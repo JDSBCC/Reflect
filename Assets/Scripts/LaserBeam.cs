@@ -7,6 +7,7 @@ public class LaserBeam : MonoBehaviour
     public float initialWidth = 0.02f, finalWidth = 0.1f;
     private GameObject colliderLight;
     private Vector3 lightPosition;
+    LineRenderer lineRenderer;
 
     void Start()
     {
@@ -17,30 +18,60 @@ public class LaserBeam : MonoBehaviour
         colliderLight.GetComponent<Light>().range = finalWidth * 2;
         colliderLight.GetComponent<Light>().color = laserColor;
         lightPosition = new Vector3(0, 0, finalWidth);
-        //
-        LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-        lineRenderer.SetColors(laserColor, laserColor);
-        lineRenderer.SetWidth(initialWidth, finalWidth);
-        lineRenderer.SetVertexCount(2);
+
+        //creating laser
+        lineRenderer = initLaser(gameObject);
     }
+
     void Update()
     {
-        Debug.Log(transform.position);
         Vector3 laserFinalPoint = transform.position + transform.forward * laserDistance;
         RaycastHit collisionPoint;
-        if (Physics.Raycast(transform.position, transform.forward, out collisionPoint, laserDistance))
-        {
-            GetComponent<LineRenderer>().SetPosition(0, transform.position);
-            GetComponent<LineRenderer>().SetPosition(1, collisionPoint.point);
-            colliderLight.transform.position = (collisionPoint.point - lightPosition);
+
+        if (Physics.Raycast(transform.position, transform.forward, out collisionPoint, laserDistance)){//when laser collides with some object
+            if (collisionPoint.transform.gameObject.CompareTag("Mirror")){
+                reflect(collisionPoint);
+            }else{
+                noReflection(collisionPoint.point);
+            }
+        }else{
+            noReflection(laserFinalPoint);
         }
-        else
-        {
-            GetComponent<LineRenderer>().SetPosition(0, transform.position);
-            GetComponent<LineRenderer>().SetPosition(1, laserFinalPoint);
-            colliderLight.transform.position = laserFinalPoint;
+    }
+
+    void reflect(RaycastHit collisionPoint){
+        RaycastHit  collisionPoint2;
+
+        Vector3 finalPoint = Vector3.Reflect((collisionPoint.point - lightPosition).normalized, collisionPoint.normal);
+        lineRenderer.SetVertexCount(3);
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, collisionPoint.point);
+        lineRenderer.SetPosition(2, finalPoint * laserDistance);
+        colliderLight.transform.position = collisionPoint.point;
+
+        if (Physics.Raycast(collisionPoint.point, finalPoint, out collisionPoint2, laserDistance)){
+            Debug.Log("HALO");
+        }else{
+            Debug.Log("!!");
         }
+    }
+    
+    void noReflection(Vector3 laserFinalPoint){
+        lineRenderer.SetVertexCount(2);
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, laserFinalPoint);
+        colliderLight.transform.position = laserFinalPoint - lightPosition;
+    }
+
+    LineRenderer initLaser(GameObject go)
+    {
+        LineRenderer lr;
+        lr = go.AddComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Particles/Additive"));
+        lr.SetColors(laserColor, laserColor);
+        lr.SetWidth(initialWidth, finalWidth);
+        lr.SetVertexCount(2);
+        return lr;
     }
 }
   

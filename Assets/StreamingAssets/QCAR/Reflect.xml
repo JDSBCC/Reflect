@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="hiro" size="100.000000 91.459076" />
+    <ImageTarget name="mirror" size="100.000000 100.263161" />
+    <ImageTarget name="red_crystal" size="100.000000 100.263161" />
+    <ImageTarget name="green_crystal" size="100.000000 100.263161" />
+    <ImageTarget name="blue_crystal" size="100.000000 100.263161" />
+    <ImageTarget name="field" size="100.000000 100.263161" />
   </Tracking>
 </QCARConfig>
