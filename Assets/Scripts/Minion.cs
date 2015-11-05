@@ -21,6 +21,7 @@ public class Minion : MonoBehaviour
         _base = GameObject.FindGameObjectWithTag("Base");
         //initiate animations
         anim = GetComponent<Animator>();
+        anim.SetInteger("anim", 0);
     }
     
     void Update()
@@ -52,6 +53,8 @@ public class Minion : MonoBehaviour
 
     public void die()
     {
+        gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
+        Destroy(gameObject.GetComponentInChildren<Canvas>());
         anim.SetInteger("anim",1);
         Invoke("destroy", 10f);
     }

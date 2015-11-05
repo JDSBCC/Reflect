@@ -9,6 +9,9 @@ public class LaserBeam : MonoBehaviour
     private Vector3 lightPosition;
     LineRenderer lineRenderer;
 
+    public GameObject sparks;
+    private GameObject sparksInstance;
+
     void Start()
     {
         colliderLight = new GameObject();
@@ -21,6 +24,8 @@ public class LaserBeam : MonoBehaviour
 
         //creating laser
         lineRenderer = initLaser(gameObject);
+        Vector3 laserFinalPoint = transform.position + transform.forward * laserDistance;
+        sparksInstance = Instantiate(sparks, laserFinalPoint, Quaternion.identity) as GameObject;
     }
 
     void Update()
@@ -31,7 +36,8 @@ public class LaserBeam : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out collisionPoint, laserDistance)){//when laser collides with some object
             if (collisionPoint.transform.gameObject.CompareTag("Mirror")){
                 reflect(collisionPoint);
-            }else{
+            }
+            else{
                 noReflection(collisionPoint.point);
             }
         }else{
@@ -50,6 +56,10 @@ public class LaserBeam : MonoBehaviour
         colliderLight.transform.position = collisionPoint.point;
 
         if (Physics.Raycast(collisionPoint.point, finalPoint, out collisionPoint2, laserDistance)){
+
+            sparksInstance.transform.position = collisionPoint2.point;
+            sparksInstance.transform.LookAt(collisionPoint2.transform.position);
+
             Debug.Log("HALO");
             if (collisionPoint2.transform.CompareTag("Minion"))
             {
@@ -61,6 +71,7 @@ public class LaserBeam : MonoBehaviour
                 colliderLight.transform.position = collisionPoint2.point;
             }
         }else{
+            sparksInstance.transform.position = new Vector3(-4000,-4000,-4000);
             Debug.Log("!!");
         }
     }
@@ -70,6 +81,8 @@ public class LaserBeam : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, laserFinalPoint);
         colliderLight.transform.position = laserFinalPoint - lightPosition;
+        sparksInstance.transform.position = laserFinalPoint;
+        sparksInstance.transform.LookAt(laserFinalPoint);
     }
 
     LineRenderer initLaser(GameObject go)
