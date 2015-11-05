@@ -71,7 +71,7 @@ public class LaserBeam : MonoBehaviour
                 colliderLight.transform.position = collisionPoint2.point;
             }
         }else{
-            sparksInstance.transform.position = new Vector3(-4000,-4000,-4000);
+            sparksInstance.transform.position = finalPoint * laserDistance;
             Debug.Log("!!");
         }
     }
