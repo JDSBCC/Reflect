@@ -14,14 +14,7 @@ public class LaserBeam : MonoBehaviour
     public GameObject sparks;
     private GameObject sparksInstance;
 
-    void Start()
-    {
-        colliderLight = new GameObject();
-        colliderLight.AddComponent<Light>();
-        colliderLight.GetComponent<Light>().intensity = 8;
-        colliderLight.GetComponent<Light>().bounceIntensity = 8;
-        colliderLight.GetComponent<Light>().range = finalWidth * 2;
-        colliderLight.GetComponent<Light>().color = laserColor;
+    void Start(){
         lightPosition = new Vector3(0, 0, finalWidth);
 
         //creating laser
@@ -54,8 +47,10 @@ public class LaserBeam : MonoBehaviour
                 Debug.Log("collide with other thing");
                 noReflection(hits[0].point, true);
             }
+            changeLaserColor(hits[0].transform.parent.gameObject);
         }else{
             noReflection(laserFinalPoint, false);
+            lineRenderer.SetColors(Color.white, Color.white);
         }
     }
 
@@ -76,8 +71,8 @@ public class LaserBeam : MonoBehaviour
                     sparksInstance.transform.LookAt(hits[i].transform.position);
 
                     Minion minion = hits[i].transform.gameObject.GetComponentInParent<Minion>();
-                    if (minion.decreaseHealth())
-                    {
+                    if (minion.decreaseHealth()){
+                        sparksInstance.transform.position = finalPoint * laserDistance;
                         minion.die();
                     }
                     lineRenderer.SetPosition(2, hits[i].point);
@@ -106,6 +101,19 @@ public class LaserBeam : MonoBehaviour
         if (x.distance < y.distance)
             return -1;
         return 0;
+    }
+
+    void changeLaserColor(GameObject go){
+        if (go.name == "crystal_red"){
+            lineRenderer.SetColors(Color.red, Color.red);
+        }else if (go.name == "crystal_green"){
+            lineRenderer.SetColors(Color.green, Color.green);
+        }else if (go.name == "crystal_blue"){
+            lineRenderer.SetColors(Color.blue, Color.blue);
+        }else{
+            lineRenderer.SetColors(Color.white, Color.white);
+        }
+
     }
 }
   
