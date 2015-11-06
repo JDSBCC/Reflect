@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
 public class LaserBeam : MonoBehaviour
 {
     public Color laserColor = Color.red;
@@ -7,7 +9,7 @@ public class LaserBeam : MonoBehaviour
     public float initialWidth = 0.02f, finalWidth = 0.1f;
     private GameObject colliderLight;
     private Vector3 lightPosition;
-    LineRenderer lineRenderer;
+    private LineRenderer lineRenderer;
 
     public GameObject sparks;
     private GameObject sparksInstance;
@@ -23,7 +25,12 @@ public class LaserBeam : MonoBehaviour
         lightPosition = new Vector3(0, 0, finalWidth);
 
         //creating laser
-        lineRenderer = initLaser(gameObject);
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.SetColors(laserColor, laserColor);
+        lineRenderer.SetWidth(initialWidth, finalWidth);
+        lineRenderer.SetVertexCount(2);
+
         Vector3 laserFinalPoint = transform.position + transform.forward * laserDistance;
         sparksInstance = Instantiate(sparks, laserFinalPoint, Quaternion.identity) as GameObject;
     }
@@ -31,69 +38,74 @@ public class LaserBeam : MonoBehaviour
     void Update()
     {
         Vector3 laserFinalPoint = transform.position + transform.forward * laserDistance;
-        RaycastHit collisionPoint;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward);
+        Array.Sort(hits, CompareRaycastDistances);
 
-        if (Physics.Raycast(transform.position, transform.forward, out collisionPoint, laserDistance)){//when laser collides with some object
-            if (collisionPoint.transform.gameObject.CompareTag("Mirror")){
-                reflect(collisionPoint);
-            }
-            else{
-                noReflection(collisionPoint.point);
+        if (hits.Length!=0){//when laser collides with some object
+            if (hits[0].transform.gameObject.CompareTag("Mirror")){//if the object is a mirror
+                reflect(hits[0]);
+            }else if (hits[0].transform.gameObject.CompareTag("Crystal")){//if the object is a crystal
+                if (hits.Length>1 && hits[1].transform.gameObject.CompareTag("Mirror")){// if is a mirror that passes at crystal before
+                    reflect(hits[1]);
+                }else{
+                    noReflection(laserFinalPoint, false);
+                }
+            }else{
+                Debug.Log("collide with other thing");
+                noReflection(hits[0].point, true);
             }
         }else{
-            noReflection(laserFinalPoint);
+            noReflection(laserFinalPoint, false);
         }
     }
 
     void reflect(RaycastHit collisionPoint){
-        RaycastHit  collisionPoint2;
-
         Vector3 finalPoint = Vector3.Reflect((collisionPoint.point - lightPosition).normalized, collisionPoint.normal);
         lineRenderer.SetVertexCount(3);
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, collisionPoint.point);
         lineRenderer.SetPosition(2, finalPoint * laserDistance);
-        colliderLight.transform.position = collisionPoint.point;
 
-        if (Physics.Raycast(collisionPoint.point, finalPoint, out collisionPoint2, laserDistance)){
+        RaycastHit[] hits = Physics.RaycastAll(collisionPoint.point, finalPoint);
+        Array.Sort(hits, CompareRaycastDistances);
 
-            sparksInstance.transform.position = collisionPoint2.point;
-            sparksInstance.transform.LookAt(collisionPoint2.transform.position);
+        if (hits.Length!=0){
+            for (int i = 0; i<hits.Length; i++){
+                if (hits[i].transform.CompareTag("Minion")){
+                    sparksInstance.transform.position = hits[i].point;
+                    sparksInstance.transform.LookAt(hits[i].transform.position);
 
-            Debug.Log("HALO");
-            if (collisionPoint2.transform.CompareTag("Minion"))
-            {
-                Minion minion = collisionPoint2.transform.gameObject.GetComponentInParent<Minion>();
-                if (minion.decreaseHealth()){
-                    minion.die();
+                    Minion minion = hits[i].transform.gameObject.GetComponentInParent<Minion>();
+                    if (minion.decreaseHealth())
+                    {
+                        minion.die();
+                    }
+                    lineRenderer.SetPosition(2, hits[i].point);
+                    break;
                 }
-                lineRenderer.SetPosition(2, collisionPoint2.point);
-                colliderLight.transform.position = collisionPoint2.point;
             }
         }else{
             sparksInstance.transform.position = finalPoint * laserDistance;
-            Debug.Log("!!");
         }
     }
     
-    void noReflection(Vector3 laserFinalPoint){
+    void noReflection(Vector3 laserFinalPoint, bool withSpark){
         lineRenderer.SetVertexCount(2);
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, laserFinalPoint);
-        colliderLight.transform.position = laserFinalPoint - lightPosition;
-        sparksInstance.transform.position = laserFinalPoint;
-        sparksInstance.transform.LookAt(laserFinalPoint);
+        if (withSpark){
+            sparksInstance.transform.position = laserFinalPoint;
+            sparksInstance.transform.LookAt(laserFinalPoint);
+        }
     }
 
-    LineRenderer initLaser(GameObject go)
+    static int CompareRaycastDistances(RaycastHit x, RaycastHit y)
     {
-        LineRenderer lr;
-        lr = go.AddComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Particles/Additive"));
-        lr.SetColors(laserColor, laserColor);
-        lr.SetWidth(initialWidth, finalWidth);
-        lr.SetVertexCount(2);
-        return lr;
+        if (x.distance > y.distance)
+            return 1;
+        if (x.distance < y.distance)
+            return -1;
+        return 0;
     }
 }
   

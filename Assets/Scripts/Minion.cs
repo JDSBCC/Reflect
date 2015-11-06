@@ -54,7 +54,7 @@ public class Minion : MonoBehaviour
     public void die()
     {
         gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
-        Destroy(gameObject.GetComponentInChildren<Canvas>());
+        gameObject.GetComponentInChildren<Canvas>().enabled = false;
         anim.SetInteger("anim",1);
         Invoke("destroy", 10f);
     }
