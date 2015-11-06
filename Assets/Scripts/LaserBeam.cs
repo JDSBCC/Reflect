@@ -50,7 +50,7 @@ public class LaserBeam : MonoBehaviour
             changeLaserColor(hits[0].transform.parent.gameObject);
         }else{
             noReflection(laserFinalPoint, false);
-            lineRenderer.SetColors(Color.white, Color.white);
+            changeLaserColor(new GameObject());
         }
     }
 
