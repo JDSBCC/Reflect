@@ -55,7 +55,9 @@ public class LaserBeam : MonoBehaviour
     }
 
     void reflect(RaycastHit collisionPoint){
-        Vector3 finalPoint = Vector3.Reflect((collisionPoint.point - lightPosition).normalized, collisionPoint.normal);
+        Vector3 preFinalPoint = Vector3.Reflect((collisionPoint.point - lightPosition).normalized, collisionPoint.normal);
+        Vector3 finalPoint = new Vector3(preFinalPoint.x, 0, preFinalPoint.z);
+
         lineRenderer.SetVertexCount(3);
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, collisionPoint.point);
