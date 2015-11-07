@@ -14,7 +14,8 @@ public class Minion : MonoBehaviour
     private Animator anim;
 
     private bool isAttacking = false;
-    
+    private BaseHealth bh;
+
     void Start()
     {
         //initiate curretn health
@@ -24,6 +25,9 @@ public class Minion : MonoBehaviour
         //initiate animations
         anim = GetComponent<Animator>();
         anim.SetInteger("anim", 0);
+
+
+        bh = GameObject.FindGameObjectWithTag("Field").GetComponent<BaseHealth>();
     }
     
     void Update()
@@ -74,5 +78,9 @@ public class Minion : MonoBehaviour
             isAttacking = true;
         }
 
+    }
+
+    public void decreaseBaseHealth(){
+        bh.decreaseBaseHealth();
     }
 }
