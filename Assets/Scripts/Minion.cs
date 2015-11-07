@@ -12,6 +12,8 @@ public class Minion : MonoBehaviour
     private GameObject _base;
     public float speed = 10;
     private Animator anim;
+
+    private bool isAttacking = false;
     
     void Start()
     {
@@ -26,10 +28,12 @@ public class Minion : MonoBehaviour
     
     void Update()
     {
-        if (current_health > 0)
+        if (current_health > 0 && !isAttacking)
         {
             transform.LookAt(_base.transform.position);
             transform.position = Vector3.MoveTowards(transform.position, _base.transform.position, speed * Time.deltaTime);
+        } else if (current_health > 0 && isAttacking){
+            anim.SetInteger("anim", 2);
         }
     }
 
@@ -55,6 +59,7 @@ public class Minion : MonoBehaviour
     {
         gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
         gameObject.GetComponentInChildren<Canvas>().enabled = false;
+        isAttacking = false;
         anim.SetInteger("anim",1);
         Invoke("destroy", 10f);
     }
@@ -62,5 +67,12 @@ public class Minion : MonoBehaviour
     public void destroy()
     {
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter(Collider col){
+        if (col.transform.CompareTag("Base")){
+            isAttacking = true;
+        }
+
     }
 }

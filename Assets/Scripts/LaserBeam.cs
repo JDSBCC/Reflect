@@ -70,7 +70,7 @@ public class LaserBeam : MonoBehaviour
                     sparksInstance.transform.position = hits[i].point;
                     sparksInstance.transform.LookAt(hits[i].transform.position);
 
-                    Minion minion = hits[i].transform.gameObject.GetComponentInParent<Minion>();
+                    Minion minion = hits[i].transform.gameObject.GetComponent<Minion>();
                     if (minion.decreaseHealth()){
                         sparksInstance.transform.position = finalPoint * laserDistance;
                         minion.die();
