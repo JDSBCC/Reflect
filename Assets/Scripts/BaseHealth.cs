@@ -10,9 +10,11 @@ public class BaseHealth : MonoBehaviour {
     private GameObject []points;
 
     private int minionKilled = 0;
+    private Text textUI;
 
     // Use this for initialization
     void Start (){
+        textUI = GameObject.FindGameObjectWithTag("Info").GetComponentInChildren<Text>();
         points = new GameObject[10];
     }
 
@@ -22,11 +24,15 @@ public class BaseHealth : MonoBehaviour {
             health++;
             Invoke("drawHealthPoint", 2.0f);
         }
+        if(health == 10) {
+            textUI.text = "";
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (GetComponentInChildren<MeshRenderer>().isVisible && !init){
+            textUI.text = "The game begins when all balls are around the base. \n Be prepared...";
             drawHealthPoint();
             init = true;
         }
@@ -46,7 +52,7 @@ public class BaseHealth : MonoBehaviour {
         Destroy(points[health-1]);
         health--;
         if (health==0){
-            GameObject.FindGameObjectWithTag("Info").GetComponentInChildren<Text>().text = "Minions killed: "+ minionKilled;
+            textUI.text = "Minions killed: "+ minionKilled;
             Time.timeScale = 0;
         }
     }
