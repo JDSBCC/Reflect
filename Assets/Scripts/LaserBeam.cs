@@ -13,8 +13,11 @@ public class LaserBeam : MonoBehaviour
 
     public GameObject sparks;
     private GameObject sparksInstance;
+    private GameObject empty;
 
     void Start(){
+        empty = new GameObject();
+
         lightPosition = new Vector3(0, 0, finalWidth);
 
         //creating laser
@@ -50,7 +53,7 @@ public class LaserBeam : MonoBehaviour
             changeLaserColor(hits[0].transform.parent.gameObject);
         }else{
             noReflection(laserFinalPoint, false);
-            changeLaserColor(new GameObject());
+            changeLaserColor(empty);
         }
     }
 
