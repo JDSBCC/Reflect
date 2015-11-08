@@ -41,11 +41,11 @@ public class Minion : MonoBehaviour
         }
     }
 
-    public bool decreaseHealth()
+    public bool decreaseHealth(float dam)
     {
         if (current_health > 0)
         {
-            current_health -= 2f;
+            current_health -= dam;
             float calc_health = current_health / max_health;
             setHealthBar(calc_health);
         }

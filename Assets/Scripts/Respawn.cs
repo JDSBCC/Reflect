@@ -9,6 +9,7 @@ public class Respawn : MonoBehaviour {
     public GameObject minion_blue;
     private bool init = false;
     private static int[] choices = {200, -200};
+    private static int[] minionChoices = {0, 0, 0, 0, 1, 2, 3, 1, 2, 3};
 
     public int minionCount;
     public float spawnWait;
@@ -23,25 +24,41 @@ public class Respawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update (){
         //Debug.Log();
-        if (GetComponentInChildren<MeshRenderer>().isVisible && !init){
+        if (GetComponentInChildren<MeshRenderer>().isVisible && !init && GetComponent<BaseHealth>().getHealth()==10){
             StartCoroutine(SpawnWaves());
             init = true;
         }
 
     }
 
-    IEnumerator SpawnWaves()
-    {
+    IEnumerator SpawnWaves(){
         yield return new WaitForSeconds(startWait);
-        while (true)
-        {
-            for (int i = 0; i < minionCount; i++)
-            {
+        while (true){
+            for (int i = 0; i < minionCount; i++){
                 Vector3 spawnPosition = new Vector3(choices[Random.Range(0, 2)], 0, choices[Random.Range(0, 2)]);
-                Instantiate(minion, spawnPosition, Quaternion.identity);
+                summon(spawnPosition);
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
+            minionCount += 2;
+        }
+    }
+
+    void summon(Vector3 spawnPosition){
+        int value = minionChoices[Random.Range(0, 10)];
+        switch (value){
+            case 0:
+                Instantiate(minion, spawnPosition, Quaternion.identity);
+                break;
+            case 1:
+                Instantiate(minion_red, spawnPosition, Quaternion.identity);
+                break;
+            case 2:
+                Instantiate(minion_green, spawnPosition, Quaternion.identity);
+                break;
+            case 3:
+                Instantiate(minion_blue, spawnPosition, Quaternion.identity);
+                break;
         }
     }
 }

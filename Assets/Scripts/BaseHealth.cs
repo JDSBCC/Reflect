@@ -29,6 +29,11 @@ public class BaseHealth : MonoBehaviour {
         }
     }
 
+    public int getHealth()
+    {
+        return health;
+    }
+
     public void decreaseBaseHealth(){
         Debug.Log(health-1);
         Destroy(points[health-1]);

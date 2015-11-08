@@ -73,10 +73,8 @@ public class LaserBeam : MonoBehaviour
                     sparksInstance.transform.LookAt(hits[i].transform.position);
 
                     Minion minion = hits[i].transform.gameObject.GetComponent<Minion>();
-                    if (minion.decreaseHealth()){
-                        sparksInstance.transform.position = finalPoint * laserDistance;
-                        minion.die();
-                    }
+                    Debug.Log(minion.name);
+                    dealDamageByColor(minion, finalPoint);
                     lineRenderer.SetPosition(2, hits[i].point);
                     break;
                 }
@@ -108,14 +106,34 @@ public class LaserBeam : MonoBehaviour
     void changeLaserColor(GameObject go){
         if (go.name == "crystal_red"){
             lineRenderer.SetColors(Color.red, Color.red);
+            laserColor = Color.red;
         }else if (go.name == "crystal_green"){
             lineRenderer.SetColors(Color.green, Color.green);
+            laserColor = Color.green;
         }else if (go.name == "crystal_blue"){
             lineRenderer.SetColors(Color.blue, Color.blue);
+            laserColor = Color.blue;
         }else{
             lineRenderer.SetColors(Color.white, Color.white);
+            laserColor = Color.white;
         }
+    }
 
+    void dealDamageByColor(Minion minion, Vector3 finalPoint){
+        if ((minion.name == "minion_red(Clone)" && laserColor == Color.red) || 
+            (minion.name == "minion_green(Clone)" && laserColor == Color.green) ||
+            (minion.name == "minion_blue(Clone)" && laserColor == Color.blue) ||
+            (minion.name == "minion(Clone)" && laserColor == Color.white)){
+            if (minion.decreaseHealth(2f)){
+                sparksInstance.transform.position = finalPoint * laserDistance;
+                minion.die();
+            }
+        }else if(laserColor == Color.white){
+            if (minion.decreaseHealth(0.3f)){
+                sparksInstance.transform.position = finalPoint * laserDistance;
+                minion.die();
+            }
+        }
     }
 }
   
