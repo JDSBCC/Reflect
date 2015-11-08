@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BaseHealth : MonoBehaviour {
 
@@ -7,6 +8,8 @@ public class BaseHealth : MonoBehaviour {
     private int health = 0;
     private bool init = false;
     private GameObject []points;
+
+    private int minionKilled = 0;
 
     // Use this for initialization
     void Start (){
@@ -34,12 +37,16 @@ public class BaseHealth : MonoBehaviour {
         return health;
     }
 
+    public void setMinionKilled()
+    {
+        minionKilled++;
+    }
+
     public void decreaseBaseHealth(){
-        Debug.Log(health-1);
         Destroy(points[health-1]);
         health--;
         if (health==0){
-            Debug.Log("Load end screen");
+            GameObject.FindGameObjectWithTag("Info").GetComponentInChildren<Text>().text = "Minions killed: "+ minionKilled;
             Time.timeScale = 0;
         }
     }

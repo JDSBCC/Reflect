@@ -64,6 +64,7 @@ public class Minion : MonoBehaviour
         gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
         gameObject.GetComponentInChildren<Canvas>().enabled = false;
         isAttacking = false;
+        GameObject.FindGameObjectWithTag("Field").GetComponent<BaseHealth>().setMinionKilled();
         anim.SetInteger("anim",1);
         Invoke("destroy", 10f);
     }

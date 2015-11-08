@@ -73,7 +73,6 @@ public class LaserBeam : MonoBehaviour
                     sparksInstance.transform.LookAt(hits[i].transform.position);
 
                     Minion minion = hits[i].transform.gameObject.GetComponent<Minion>();
-                    Debug.Log(minion.name);
                     dealDamageByColor(minion, finalPoint);
                     lineRenderer.SetPosition(2, hits[i].point);
                     break;
