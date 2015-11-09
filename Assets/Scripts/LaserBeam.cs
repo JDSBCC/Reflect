@@ -47,8 +47,7 @@ public class LaserBeam : MonoBehaviour
                     noReflection(laserFinalPoint, false);
                 }
             }else{
-                Debug.Log("collide with other thing");
-                noReflection(hits[0].point, true);
+                noReflection(hits[0].point, false);
             }
             changeLaserColor(hits[0].transform.parent.gameObject);
         }else{

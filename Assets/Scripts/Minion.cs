@@ -54,15 +54,16 @@ public class Minion : MonoBehaviour
         return false;
     }
 
-    void setHealthBar(float myHealth)
-    {
-        healthBar.transform.localScale = new Vector3(myHealth, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+    void setHealthBar(float myHealth){
+        if (healthBar != null){
+            healthBar.transform.localScale = new Vector3(myHealth, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        }
     }
 
     public void die()
     {
-        gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false;
-        gameObject.GetComponentInChildren<Canvas>().enabled = false;
+        GetComponentInChildren<CapsuleCollider>().enabled = false;
+        Destroy(transform.GetChild(3).gameObject);
         isAttacking = false;
         GameObject.FindGameObjectWithTag("Field").GetComponent<BaseHealth>().setMinionKilled();
         anim.SetInteger("anim",1);
@@ -83,5 +84,24 @@ public class Minion : MonoBehaviour
 
     public void decreaseBaseHealth(){
         bh.decreaseBaseHealth();
+    }
+
+    private void disable()
+    {
+
+        Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
+        Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+
+        // Disable rendering:
+        foreach (Renderer component in rendererComponents)
+        {
+            component.enabled = false;
+        }
+
+        // Disable colliders:
+        foreach (Collider component in colliderComponents)
+        {
+            component.enabled = false;
+        }
     }
 }
